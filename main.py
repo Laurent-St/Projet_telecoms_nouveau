@@ -4,15 +4,14 @@ from Model import *
 import numpy as np
 from fctsmath import *
 from Antenna import *
-from ref_tr_diff import *
-from isinwall import *
+from ref_onde_directe import *
 from diffraction import *
 
 #taille de la carte et initialisation des murs
-xmax=100
-ymax=100
+xmax=250
+ymax=250
 model=Model(xmax,ymax)
-cat=5
+cat=1
 model.setwalls(xmax,ymax, cat)
 
 #ATTENTION ici tx et rx désignent l'émetteur et le récepteur, mais

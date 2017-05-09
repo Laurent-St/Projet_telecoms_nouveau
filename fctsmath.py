@@ -23,12 +23,12 @@ def line_intersection(line1, line2):
 def isinsegment(pt_arr,pt_dep,pt_inter):
     if(dis_eucl(pt_dep,pt_inter)+dis_eucl(pt_inter,pt_arr) == dis_eucl(pt_dep,pt_arr)):
         return True
-    
+
 
 
 def segment_intersec(line1,line2):
     intersection_pt = line_intersection(line1, line2)
-    
+
     if(intersection_pt == "no_inter"):
         return None
     else:
@@ -36,8 +36,8 @@ def segment_intersec(line1,line2):
             return intersection_pt
         else:
             return None
-    
-    
+
+
 
 def calcAngle_ref(lineA,lineB):
     #ATTENTION ne peut être utilisé que pour l'angle d'incidence de la réflexion et transmission
@@ -70,3 +70,30 @@ def calc_angle_diff(vector1,vector2):
     norms = np.linalg.norm(vector1)*np.linalg.norm(vector2)
     theta = np.arccos((vector1[0]*vector2[0] + vector1[1]*vector2[1])/norms)
     return theta
+
+#Fonction permettant de déterminer si oui ou non un point de calcul se situe dans un mur
+def isinwall(walls,x,y):
+    #Il existe deux cas possible, soit le point se trouve dans un mur horizontal soit vertical
+
+    res = False
+
+    for wall in walls:
+        #Mur horizontal
+        if y == wall.y1 and y == wall.y2:
+            #il faut s'assurer du "sens" du mur x1> ou < que x2
+            if wall.x1 < wall.x2:
+                if wall.x1 <= x and wall.x2 >= x:
+                    res = True
+            elif wall.x1 > wall.x2:
+                if wall.x1 >= x and wall.x2 <= x:
+                    res = True
+
+        #Mur vertical
+        if x == wall.x1 and x == wall.x1:
+            if wall.y1 < wall.y2:
+                if wall.y1 <= y and wall.y2 >= y:
+                    res = True
+            elif wall.y1 > wall.y2:
+                if wall.y1 >= x and wall.y2 <= y:
+                    res = True
+    return res
