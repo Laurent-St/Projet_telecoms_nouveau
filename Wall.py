@@ -5,7 +5,7 @@ eps_0 = 8.85*(10**(-12)) #permittivité électrique du vide
 c = 3*(10**8) #vitesse de la lumière
 mu_0 = 4*np.pi*(10**(-7)) #perméabilité magnétique du vide
 w = 2*np.pi*2.45*(10**9) #pulsation des ondes
-sig_parfait=10**(12) #valeur élevée pour simuler l'infini pour un conducteur parfait
+sig_parfait=10**(15) #valeur élevée pour simuler l'infini pour un conducteur parfait
 
 class Wall:
     "Classe mur contenant les coordonnées (x1,y1) et (x2,y2)"

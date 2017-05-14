@@ -14,6 +14,8 @@ model=Model(xmax,ymax)
 cat=1
 model.setwalls(xmax,ymax, cat)
 
+facteur_echelle=20.86 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
+
 #ATTENTION ici tx et rx désignent l'émetteur et le récepteur, mais
 #dans la fct reflexion ils désignent le tuple contenant la position
 
@@ -21,7 +23,7 @@ model.setwalls(xmax,ymax, cat)
 #ATTENTION NE PAS METTRE RECEPTEUR DANS LES MURS
 
 gain=1.6981
-txx=20
+txx=235
 txy=20
 raystot=[]
 tx=Antenna(gain,txx,txy)
@@ -29,6 +31,7 @@ tx.setpower_emission(0.1) #P_TX=0.1 Watt, voir calcul dans le rapport
 PRX=0 #puissance moyenne
 #lsPRX=[[0]*xmax]*ymax
 lsPRX=np.zeros((ymax+1,xmax+1)) #np.zeros((lignes,colonnes))
+ls_debit_binaire=np.zeros((ymax+1,xmax+1))
 #lsPRX est la liste des puissances EN DBM
 #MAIS ATTENTION il faut calculer le log après avoir sommé toutes les contributions,
 #et pas sommer des logarithmes!!!
@@ -57,7 +60,7 @@ for i in range(0,ymax): #i: dimension y
             for ray in rays:
                 #raystot.append(ray)
                 if ray.dis != None:
-                    if dis_eucl((txx,txy),(j,i))/20.83 > 0.3:
+                    if dis_eucl((txx,txy),(j,i))/facteur_echelle > 0.3: #diviser la distance par une valeur supérieure à 1 augmente la zone où on remplace par 0,001
                     #if ray.dis>0.3:
 
                         lsPRX[i][j]=lsPRX[i][j]+ray.get_PRX_individuelle(tx)
@@ -68,18 +71,21 @@ for i in range(0,ymax): #i: dimension y
                         #print('puissance onde réfléchie=',ray.get_PRX_individuelle(tx))
             PRX=PRX+lsPRX[i][j]
             lsPRX[i][j]=10*np.log(lsPRX[i][j]/0.001) #on passe en dBm seulement à la fin
+            ls_debit_binaire[i][j]=interpolation(lsPRX[i][j])
 
 #Cas où le récepteur est sur l'émetteur et donc distance nulle, mène à des résultats incohérents: on prend la moyenne des points autour
-lsPRX[txy][txx]=(lsPRX[txy-1][txx-1]+lsPRX[txy-1][txx]+lsPRX[txy-1][txx+1]+lsPRX[txy][txx-1]+lsPRX[txy][txx+1]+lsPRX[txy+1][txx-1]+lsPRX[txy+1][txx]+lsPRX[txy+1][txx+1])/8
-print(lsPRX[99][99])            
-
+lsPRX[txy][txx]=(lsPRX[txy-1][txx-1]+lsPRX[txy-1][txx]+lsPRX[txy-1][txx+1]+lsPRX[txy][txx-1]+lsPRX[txy][txx+1]+lsPRX[txy+1][txx-1]+lsPRX[txy+1][txx]+lsPRX[txy+1][txx+1])/8            
+ls_debit_binaire[txy][txx]=interpolation(lsPRX[txy][txx])
 #print(lsPRX)
 
 #nbre_pts=xmax*ymax
 #PRX=PRX/nbre_pts
 #PRX_dBm=10*np.log(PRX/0.001)
 
-GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
+#AFFICHAGE PUISSANCE:
+#GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
+#AFFICHAGE DEBIT BINAIRE:
+GUI(model.getwalls(),xmax,ymax,raystot,ls_debit_binaire,3)
 
 """Calcul juste en un point
 gain=1

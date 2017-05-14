@@ -48,6 +48,15 @@ def GUI(walls,xmax,ymax,rays,lsPRX,plot_type):
         cb = plt.colorbar()
         cb.set_label('Puissance reçue [dBm]')
 #############################################################################
+
+#### AFFICHAGE DU débit binaire #############################################
+    if plot_type==3:
+        cmap = plt.get_cmap('jet')
+        plt.imshow(lsPRX, interpolation="nearest", cmap=cmap)
+        cb = plt.colorbar()
+        cb.set_label('Débit binaire [Mb/s]')
+#############################################################################
+
     plt.ion()
     plt.show()
 
