@@ -104,6 +104,5 @@ def interpolation (sensibility):
     #-93 dBm == 6 Mb/s
     #-73 dBm == 54 Mb/s
     #y = 6 + 2.4(x + 93)
-    res=6 + 2.4*(sensibility + 93)
 
-    return res
+    return 6 + 2.4*(sensibility + 93)
