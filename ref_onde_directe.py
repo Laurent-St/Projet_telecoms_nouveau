@@ -205,6 +205,7 @@ def reflexion(tx,rx,walls):
             rays.append(ray2)
 
 
+
     #4) Reflexion double: A FAIRE
 
 

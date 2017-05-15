@@ -21,14 +21,17 @@ def line_intersection(line1, line2):
 
 
 def isinsegment(pt_arr,pt_dep,pt_inter):
-    if(dis_eucl(pt_dep,pt_inter)+dis_eucl(pt_inter,pt_arr) == dis_eucl(pt_dep,pt_arr)):
+
+    epsilon=10**(-6) #pour éviter des erreurs dues aux arrondis
+    if(dis_eucl(pt_dep,pt_inter)+dis_eucl(pt_inter,pt_arr) - dis_eucl(pt_dep,pt_arr) < epsilon):
         return True
+    else:
+        return False
 
 
 
 def segment_intersec(line1,line2):
     intersection_pt = line_intersection(line1, line2)
-
     if(intersection_pt == "no_inter"):
         return None
     else:
@@ -104,5 +107,10 @@ def interpolation (sensibility):
     #-93 dBm == 6 Mb/s
     #-73 dBm == 54 Mb/s
     #y = 6 + 2.4(x + 93)
-
-    return 6 + 2.4*(sensibility + 93)
+    if sensibility < (-93):
+        res=0
+    elif sensibility>(-73):
+        res=54
+    else:
+        res=6 + 2.4*(sensibility + 93)
+    return res

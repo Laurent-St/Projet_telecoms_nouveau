@@ -8,13 +8,13 @@ from ref_onde_directe import *
 from diffraction import *
 
 #taille de la carte et initialisation des murs
-xmax=250
-ymax=250
+xmax=200
+ymax=200
 model=Model(xmax,ymax)
-cat=1
+cat=5
 model.setwalls(xmax,ymax, cat)
 
-facteur_echelle=20.86 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
+facteur_echelle=200/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 
 #ATTENTION ici tx et rx désignent l'émetteur et le récepteur, mais
 #dans la fct reflexion ils désignent le tuple contenant la position
@@ -23,8 +23,8 @@ facteur_echelle=20.86 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 #ATTENTION NE PAS METTRE RECEPTEUR DANS LES MURS
 
 gain=1.6981
-txx=235
-txy=20
+txx=100
+txy=100
 raystot=[]
 tx=Antenna(gain,txx,txy)
 tx.setpower_emission(0.1) #P_TX=0.1 Watt, voir calcul dans le rapport
@@ -57,18 +57,18 @@ for i in range(0,ymax): #i: dimension y
 
             #print('lsPRX[i][j]=',lsPRX[i][j])
             #raystot.append(ray_direct)
-            for ray in rays:
-                #raystot.append(ray)
-                if ray.dis != None:
-                    if dis_eucl((txx,txy),(j,i))/facteur_echelle > 0.3: #diviser la distance par une valeur supérieure à 1 augmente la zone où on remplace par 0,001
-                    #if ray.dis>0.3:
+            if dis_eucl((txx,txy),(j,i))/facteur_echelle >= 0.3: #diviser la distance par une valeur supérieure à 1 augmente la zone où on remplace par 0,001
+                for ray in rays:
+                    if (j==150 and i==150):
+                        print('puissance individuelle',ray.get_PRX_individuelle(tx))
+                    #raystot.append(ray)
+                    if ray.dis != None:
+                            lsPRX[i][j]=lsPRX[i][j]+ray.get_PRX_individuelle(tx)
+                            
+            else:
+                lsPRX[i][j]=0.001 #pour négliger les points qui ne sont pas en champ lointain
+            
 
-                        lsPRX[i][j]=lsPRX[i][j]+ray.get_PRX_individuelle(tx)
-                    else:
-                        lsPRX[i][j]=0.001 #pour négliger les points qui ne sont pas en champ lointain
-                    #if i==1 and j==txx:
-                        #print('distance=',ray.dis)
-                        #print('puissance onde réfléchie=',ray.get_PRX_individuelle(tx))
             PRX=PRX+lsPRX[i][j]
             lsPRX[i][j]=10*np.log(lsPRX[i][j]/0.001) #on passe en dBm seulement à la fin
             ls_debit_binaire[i][j]=interpolation(lsPRX[i][j])
@@ -83,26 +83,26 @@ ls_debit_binaire[txy][txx]=interpolation(lsPRX[txy][txx])
 #PRX_dBm=10*np.log(PRX/0.001)
 
 #AFFICHAGE PUISSANCE:
-#GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
+GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
 #AFFICHAGE DEBIT BINAIRE:
-GUI(model.getwalls(),xmax,ymax,raystot,ls_debit_binaire,3)
+#GUI(model.getwalls(),xmax,ymax,raystot,ls_debit_binaire,3)
+
 
 """Calcul juste en un point
-gain=1
-txx=20
-txy=20
-rxx=99
-rxy=99
+gain=1.6981
+txx=50
+txy=50
+rxx=151
+rxy=151
 tx=Antenna(gain,txx,txy)
 tx.setpower_emission(0.1) #P_TX=0.1 Watt, voir calcul dans le rapport
 rx=Antenna(gain,rxx,rxy)
 raystot=reflexion((tx.x,tx.y),(rx.x,rx.y),model.getwalls())
 rays_diff=diffraction(model.getwalls(),model.getaretes(), model.getcoins(),(tx.x,tx.y),(rx.x,rx.y))
 raystot.extend(rays_diff)
-print('temp1')
 ray_direct=onde_directe((tx.x,tx.y),(rx.x,rx.y),model.getwalls())
-print('temp2')
 raystot.append(ray_direct)
+
 
 #calcul de la puissance
 PRX=0
