@@ -12,7 +12,8 @@ class Ray:
         #coef=coefficient total par lequel la valeur du champ est multiplié
         #dis=distance euclidienne parcourue par tous les rayons composants une réflexion, donc cet attribut ne sera
         #mis que pour le dernier rayon d'une réflexion
-        facteur_echelle=200/12
+        a=1/10
+        facteur_echelle=(250*a)/12
         #facteur_echelle=41.66/2 # /pour faire correspondre les dimensions python aux dimensions de la pièce
         self.x1=x1
         self.y1=y1

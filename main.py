@@ -8,11 +8,13 @@ from ref_onde_directe import *
 from diffraction import *
 
 #taille de la carte et initialisation des murs
-xmax=200
-ymax=200
+xmax=250
+ymax=250
 model=Model(xmax,ymax)
 cat=5
-model.setwalls(xmax,ymax, cat)
+#a est le facteur multiplicatif par rapport à la dimension 250x250
+a= 1
+model.setwalls(xmax,ymax, cat,a)
 
 facteur_echelle=200/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 
