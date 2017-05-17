@@ -56,9 +56,32 @@ def GUI(walls,xmax,ymax,rays,lsPRX,plot_type):
         cb = plt.colorbar()
         cb.set_label('Débit binaire [Mb/s]')
 #############################################################################
-
     plt.ion()
     plt.show()
+
+
+#### AFFICHAGE DE L'INTRUS SI FONCTION DETECTION ############################
+def GUI_detector(walls,xmax,ymax,pos):
+    #position est un tuple contenant la position de l'intrus
+    for wall in walls:
+        if(wall.mat==1):
+            x='black'
+        elif (wall.mat==2):
+            x='red'
+        elif (wall.mat==3):
+            x='blue'
+        elif (wall.mat==4):
+            x='green'
+        plt.plot((wall.x1,wall.x2),(wall.y1,wall.y2),color=x,linewidth=3.0)
+
+    plt.gca().invert_yaxis()
+
+    plt.plot(pos[0],pos[1],'ro')
+    plt.show()
+
+
+
+#############################################################################
 
 
 

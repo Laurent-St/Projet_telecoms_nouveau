@@ -36,6 +36,23 @@ for i in range(0,ymax): #i= dimension y
 print(ls_PRX_pt_ij)
 """
 
-#test for par pas décimal
-for i in np.arange(0,5,0.1):
-    print(i)
+###test for par pas décimal
+##for i in np.arange(0,5,0.1):
+##    print(i)
+
+##def ftest(x,y):
+##    xbis=x*5
+##    ybis=y*10
+##    return xbis,ybis
+
+##a=[(1,2),(8,0),(5,8)]
+##b=[(1,2),(8,0),(5,8),(2,3)]
+##c=list(set(b)-set(a))
+##print(c)
+
+import matplotlib as mp
+import matplotlib.pyplot as plt
+
+a=(2,4)
+plt.plot(a[0],a[1],'ro')
+plt.show()
