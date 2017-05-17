@@ -3,13 +3,26 @@ import math as m
 from Ray import *
 from Wall import *
 
-def onde_directe(tx,rx, walls):
+def onde_directe(tx,rx,walls):
     ray1=Ray(tx[0],tx[1],rx[0],rx[1],1,dis_eucl(tx,rx))
     for wall in walls:
         if segment_intersec([(ray1.x1,ray1.y1),(ray1.x2,ray1.y2)],[(wall.x1,wall.y1),(wall.x2,wall.y2)])!=None:
             theta_itr=m.pi/2-calcAngle_ref([(ray1.x1,ray1.y1),(ray1.x2,ray1.y2)],[(wall.x1,wall.y1),(wall.x2,wall.y2)]) #angle d'incidence de TRANSMISSION
             ray1.coef=ray1.coef*wall.get_coeff_trans(theta_itr)
     return ray1
+
+def onde_directe_compteur(tx,rx,walls):
+    compteur=0
+    ls_pos=[]
+    ray1=Ray(tx[0],tx[1],rx[0],rx[1],1,dis_eucl(tx,rx))
+    for wall in walls:
+        if segment_intersec([(ray1.x1,ray1.y1),(ray1.x2,ray1.y2)],[(wall.x1,wall.y1),(wall.x2,wall.y2)])!=None:
+            pos=segment_intersec([(ray1.x1,ray1.y1),(ray1.x2,ray1.y2)],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
+            ls_pos.append(pos)
+            compteur=compteur+1
+            theta_itr=m.pi/2-calcAngle_ref([(ray1.x1,ray1.y1),(ray1.x2,ray1.y2)],[(wall.x1,wall.y1),(wall.x2,wall.y2)]) #angle d'incidence de TRANSMISSION
+            ray1.coef=ray1.coef*wall.get_coeff_trans(theta_itr)
+    return ray1,compteur,ls_pos
 
 def reflexion(tx,rx,walls):
     """
