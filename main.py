@@ -8,15 +8,15 @@ from ref_onde_directe import *
 from diffraction import *
 
 #taille de la carte et initialisation des murs
-xmax=250
-ymax=250
+xmax=12
+ymax=12
 model=Model(xmax,ymax)
-cat=5
-#a est le facteur multiplicatif par rapport à la dimension 250x250
+cat=2
+#a est le facteur multiplicatif par rapport à la dimension 250x250, pour la catégorie 1
 a= 1
 model.setwalls(xmax,ymax, cat,a)
 
-facteur_echelle=200/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
+facteur_echelle=12/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 
 #ATTENTION ici tx et rx désignent l'émetteur et le récepteur, mais
 #dans la fct reflexion ils désignent le tuple contenant la position
@@ -25,8 +25,8 @@ facteur_echelle=200/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 #ATTENTION NE PAS METTRE RECEPTEUR DANS LES MURS
 
 gain=1.6981
-txx=100
-txy=100
+txx=6
+txy=6
 raystot=[]
 tx=Antenna(gain,txx,txy)
 tx.setpower_emission(0.1) #P_TX=0.1 Watt, voir calcul dans le rapport
@@ -61,8 +61,6 @@ for i in range(0,ymax): #i: dimension y
             #raystot.append(ray_direct)
             if dis_eucl((txx,txy),(j,i))/facteur_echelle >= 0.3: #diviser la distance par une valeur supérieure à 1 augmente la zone où on remplace par 0,001
                 for ray in rays:
-                    if (j==150 and i==150):
-                        print('puissance individuelle',ray.get_PRX_individuelle(tx))
                     #raystot.append(ray)
                     if ray.dis != None:
                             lsPRX[i][j]=lsPRX[i][j]+ray.get_PRX_individuelle(tx)
@@ -85,9 +83,9 @@ ls_debit_binaire[txy][txx]=interpolation(lsPRX[txy][txx])
 #PRX_dBm=10*np.log(PRX/0.001)
 
 #AFFICHAGE PUISSANCE:
-GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
+#GUI(model.getwalls(),xmax,ymax,raystot,lsPRX,2)
 #AFFICHAGE DEBIT BINAIRE:
-#GUI(model.getwalls(),xmax,ymax,raystot,ls_debit_binaire,3)
+GUI(model.getwalls(),xmax,ymax,raystot,ls_debit_binaire,3)
 
 
 """Calcul juste en un point
