@@ -107,21 +107,26 @@ class Model:
             self.walls[2]=Wall(4*xmax/10,6*xmax/10,6*ymax/10,6*ymax/10,4) #down
             self.walls[3]=Wall(6*xmax/10,6*xmax/10,4*ymax/10,6*ymax/10,4) #right
 
+            # self.walls[4]=Wall(0,xmax,0,0,1) #up
+            # self.walls[5]=Wall(0,xmax,ymax,ymax,1) #down
+            # self.walls[6]=Wall(0,0,0,ymax,1) #left
+            # self.walls[7]=Wall(xmax,xmax,0,ymax,1) #right
+
             #murs autour
             # self.walls[4]=Wall(0,xmax,0,0,1) #up
             # self.walls[5]=Wall(0,xmax,ymax,ymax,1) #down
             # self.walls[6]=Wall(0,0,0,ymax,1) #left
             # self.walls[7]=Wall(xmax,xmax,0,ymax,1) #right
 
-            self.coins.append((0,0));
-            self.coins.append((xmax,0));
-            self.coins.append((0,ymax));
-            self.coins.append((xmax,ymax))
-
-            self.coins.append((4*xmax/10,4*ymax/10));
-            self.coins.append((6*xmax/10,6*ymax/10));
-            self.coins.append((4*xmax/10,6*ymax/10));
-            self.coins.append((6*xmax/10,4*ymax/10));
+            # self.coins.append((0,0));
+            # self.coins.append((xmax,0));
+            # self.coins.append((0,ymax));
+            # self.coins.append((xmax,ymax))
+            #
+            # self.coins.append((4*xmax/10,4*ymax/10));
+            # self.coins.append((6*xmax/10,6*ymax/10));
+            # self.coins.append((4*xmax/10,6*ymax/10));
+            # self.coins.append((6*xmax/10,4*ymax/10));
 
 
         elif cat ==6:

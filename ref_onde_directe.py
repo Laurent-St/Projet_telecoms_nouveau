@@ -117,7 +117,7 @@ def reflexion(tx,rx,walls):
     for i in range(0,len(wallright)):
         pt_inter_right_i=segment_intersec([imright[i],rx],[(wallright[i].x1,wallright[i].y1),(wallright[i].x2,wallright[i].y2)])
         pt_inter_right.append(pt_inter_right_i)
-        if pt_inter_right_i != None:
+        if pt_inter_right_i != None and is_extremite(pt_inter_right_i,walls)==False:
 
             #line1=[tx,pt_inter_right[i]]
             ray1=Ray(tx[0],tx[1],pt_inter_right[i][0],pt_inter_right[i][1],1,None) #rayon 1 entre tx et le pt d'intersection, coef est mis à 1
@@ -144,7 +144,7 @@ def reflexion(tx,rx,walls):
         # print('interupok')
         pt_inter_up_i=segment_intersec([imup[i],rx],[(wallup[i].x1,wallup[i].y1),(wallup[i].x2,wallup[i].y2)])
         pt_inter_up.append(pt_inter_up_i)
-        if pt_inter_up_i != None:
+        if pt_inter_up_i != None and is_extremite(pt_inter_up_i,walls)==False:
 
             # print(pt_inter_up)
             ray1=Ray(tx[0],tx[1],pt_inter_up[i][0],pt_inter_up[i][1],1,None) #rayon 1 entre tx et le pt d'intersection, coef est mis à 1
@@ -171,7 +171,7 @@ def reflexion(tx,rx,walls):
         # print('wallleftok')
         pt_inter_left_i=segment_intersec([imleft[i],rx],[(wallleft[i].x1,wallleft[i].y1),(wallleft[i].x2,wallleft[i].y2)])
         pt_inter_left.append(pt_inter_left_i)
-        if pt_inter_left_i != None:
+        if pt_inter_left_i != None and is_extremite(pt_inter_left_i,walls)==False:
 
             ray1=Ray(tx[0],tx[1],pt_inter_left[i][0],pt_inter_left[i][1],1,None) #rayon 1 entre tx et le pt d'intersection, coef est mis à 1
             #recherche des transmissions de ray1
@@ -196,7 +196,7 @@ def reflexion(tx,rx,walls):
     for i in range(0,len(walldown)):
         pt_inter_down_i=segment_intersec([imdown[i],rx],[(walldown[i].x1,walldown[i].y1),(walldown[i].x2,walldown[i].y2)])
         pt_inter_down.append(pt_inter_down_i)
-        if pt_inter_down_i != None:
+        if pt_inter_down_i != None and is_extremite(pt_inter_down_i,walls)==False:
 
             ray1=Ray(tx[0],tx[1],pt_inter_down[i][0],pt_inter_down[i][1],1,None) #rayon 1 entre tx et le pt d'intersection, coef est mis à 1
             #recherche des transmissions de ray1
@@ -274,11 +274,11 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_up],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
             #print('p2droitehaut=',p2)
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False :
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
                 #print('p1droitehaute',p1)
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
                     #en effet, il se peut que le mur devant subir la seconde réflexion soit "trop court", et donc que le point p2 se retrouve
                     #sur le mur de droite et pas celui du haut, ce qui aurait pour conséquence  que p1 == p2 il faut donc proscrire l'ensemble de
                     #ces cas
@@ -335,10 +335,10 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_down],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
             #print('2e p2:',p2)
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
 
                     if p1 != p2:
                         #print('droitebas')
@@ -397,11 +397,11 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_right],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
             #print('3e p2=',p2)
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
 
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
                     if p1 != p2:
                         #print('basdroite')
                         ptreflex2.append(p2)
@@ -453,11 +453,11 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_left],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
 
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
 
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
 
                     if p1 != p2:
                         #print('basgauche')
@@ -520,12 +520,12 @@ def reflexion(tx,rx,walls):
             p2 = segment_intersec([(rx[0],rx[1]),ypp_up],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
             #print('p2gauchehaut=',p2)
 
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
                 #print('p1gauchehaut=',p1)
 
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
 
                     if p1 != p2:
                         #print('gauchehaut')
@@ -579,11 +579,11 @@ def reflexion(tx,rx,walls):
             p2 = segment_intersec([(rx[0],rx[1]),ypp_down],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
             #print('p2gauchebasse',p2)
 
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
 
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
 
                     if p1 != p2:
                         #print('gauchebas')
@@ -643,11 +643,11 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_right],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
 
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
 
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
 
                     if p2 != p1:
                         #print('hautdroit')
@@ -701,10 +701,10 @@ def reflexion(tx,rx,walls):
             #calcul des points de deuxième réflexion et des rayons liants le récepteur au point de seconde réflexion
             p2 = segment_intersec([(rx[0],rx[1]),ypp_left],[(wall.x1,wall.y1),(wall.x2,wall.y2)])
 
-            if p2 != None:
+            if p2 != None and is_extremite(p2,walls)==False:
                 #calcul des points de de première réflexion et des rayons liants les deux points de réflexion
                 p1 = segment_intersec([p2,im],[(tempwall.x1,tempwall.y1),(tempwall.x2,tempwall.y2)])
-                if p1 != None:
+                if p1 != None and is_extremite(p1,walls)==False:
                     if p1 != p2:
                         ptreflex2.append(p2)
                         r2 = Ray(p2[0],p2[1],rx[0],rx[1],1,dis_eucl(ypp_left,rx))

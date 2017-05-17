@@ -22,7 +22,7 @@ def get_coeff_diff(s,s_p, phi,phi_p):
 
     L = s*s_p/(s+s_p)
     delta = m.pi - (phi-phi_p)
-    if (delta == 0):
+    if (delta == 0 or (np.pi*3/4<phi<np.pi*5/4)):
         D = 0;
     else : 
         

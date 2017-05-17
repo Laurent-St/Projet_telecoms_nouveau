@@ -114,3 +114,11 @@ def interpolation (sensibility):
     else:
         res=6 + 2.4*(sensibility + 93)
     return res
+
+def is_extremite(pt,walls):
+    res=False
+    #pt est un tuple
+    for wall in walls:
+        if pt==(wall.x1,wall.y1) or pt==(wall.x2,wall.y2):
+            res=True
+    return res

@@ -8,15 +8,15 @@ from ref_onde_directe import *
 from diffraction import *
 
 #taille de la carte et initialisation des murs
-xmax=12
-ymax=12
+xmax=100
+ymax=100
 model=Model(xmax,ymax)
-cat=2
+cat=5
 #a est le facteur multiplicatif par rapport à la dimension 250x250, pour la catégorie 1
 a= 1
 model.setwalls(xmax,ymax, cat,a)
 
-facteur_echelle=12/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
+facteur_echelle=100/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 
 #ATTENTION ici tx et rx désignent l'émetteur et le récepteur, mais
 #dans la fct reflexion ils désignent le tuple contenant la position
@@ -25,8 +25,8 @@ facteur_echelle=12/12 #A ACCORDER AVEC CELUI DANS LA CLASSE RAY
 #ATTENTION NE PAS METTRE RECEPTEUR DANS LES MURS
 
 gain=1.6981
-txx=6
-txy=6
+txx=10
+txy=10
 raystot=[]
 tx=Antenna(gain,txx,txy)
 tx.setpower_emission(0.1) #P_TX=0.1 Watt, voir calcul dans le rapport
