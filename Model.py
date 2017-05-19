@@ -79,7 +79,7 @@ class Model:
             self.walls[3]=Wall(xmax,xmax,0,ymax,1) #right
 
         elif cat == 3:
-             #ici on va créer un mur infin en béton
+             #ici on va créer un mur infini en béton
             self.walls= [0]*5
             self.walls[0]=Wall(0,1,0,0,2) #up1
             self.walls[1]=Wall(xmax-1,xmax,0,0,2) #up2
